@@ -2,22 +2,15 @@
 
 namespace SimpleApi;
 
-class Application
+use SimpleApi\Controllers\HomeController;
+use SimpleApi\Core\BaseApplication;
+use SimpleApi\Core\Router;
+
+class Application extends BaseApplication
 {
-  public function start()
+  protected function routes(Router $router)
   {
-    $router = new Router();
-
-    $router->create("GET", "/", function () {
-      http_response_code(200);
-      return;
-    });
-
-    $router->create("GET", "/hello", function () {
-      http_response_code(200);
-      echo json_encode(["hello" => "world"]);
-      return;
-    });
+    $router->post("/", [HomeController::class, "index"]);
 
     $router->init();
   }
